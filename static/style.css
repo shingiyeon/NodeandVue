@@ -347,7 +347,7 @@ body {
     height: 100%;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup{
+.Calender > .body > .popup{
     position: fixed;
     top:0;
     left:0;
@@ -357,7 +357,7 @@ body {
     height: 320px;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper{
+.Calender > .body > .popup > .popup_wrapper{
     position: absolute;
     width: 80%;
     height: 80%;
@@ -369,23 +369,14 @@ body {
     opacity: 1;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper{
-    position: absolute;
-    cursor: Default;
-}
-
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_title{
-   margin-top: 10px;
+.Calender > .body > .popup > .popup_wrapper > .popup_title{
+   position: relative;
+    margin-top: 10px;
    margin-bottom: 10px;
+   text-align: center;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_title > span{
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_close{
+.Calender > .body > .popup > .popup_wrapper > .popup_close{
     position: absolute;
     display: inline-block;
     top: 0;
@@ -398,12 +389,12 @@ body {
     cursor: pointer;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_close:hover{
+.Calender > .body > .popup > .popup_wrapper > .popup_close:hover{
     background-color: rgba(0,0,0,0.3);
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_close::before,
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_close::after
+.Calender > .body > .popup > .popup_wrapper > .popup_close::before,
+.Calender > .body > .popup > .popup_wrapper > .popup_close::after
 {
     content: "";
     position: absolute;
@@ -416,43 +407,47 @@ body {
     transform: translateX(-50%) translateY(-50%) rotate(45deg);
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_close::after{
+.Calender > .body > .popup > .popup_wrapper > .popup_close::after{
     position: absolute;
     right: 50%;
     transform: translateX(-50%) translateY(-50%) rotate(-45deg);
     right: 0;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .add_list > *{
+.Calender > .body > .popup > .popup_wrapper > .add_list{
+    text-align: center;
+}
+
+.Calender > .body > .popup > .popup_wrapper > .add_list > *{
     display: inline-block;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .add_list > .button{
+.Calender > .body > .popup > .popup_wrapper > .add_list > .button{
     margin-left: 5px;
     background-color: skyblue;
     border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
 }
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_content > .todobox > .todo{
+.Calender > .body > .popup > .popup_wrapper > .popup_content > .todobox > .todo{
     margin: 3px 3px;
     border-radius: 1px;
 }
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_content > .todobox > .todo {
+.Calender > .body > .popup > .popup_wrapper > .popup_content > .todobox > .todo {
     position: relative;
 }
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_content > .todobox > .todo > *{
+.Calender > .body > .popup > .popup_wrapper > .popup_content > .todobox > .todo > *{
     display: block;
     text-align: center;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_content > .todobox > .todo > span{
+.Calender > .body > .popup > .popup_wrapper > .popup_content > .todobox > .todo > span{
     border: 1px solid #4f4f4f;
     width: 75%;
     margin-right: 5px;
 }
 
-.Calender > .body > .day_box > .row > .cell > .popup > .popup_wrapper > .popup_content > .todobox > .todo > .delete-icon{
+.Calender > .body > .popup > .popup_wrapper > .popup_content > .todobox > .todo > .delete-icon{
     border: 1px solid #4f4f4f;
     width: 23%;
     height: 100%;

@@ -21,34 +21,34 @@
                     <li class="cell" v-bind:class="{show: date!=0, active: date==current_date}" v-for="date in dates" v-bind:key="date">
                         {{date==0 ? " " : date}}
                         <div class="day_box_button" @click="moveActivedate(date)"></div>
-                        <div class="popup" v-if="show_flag === 1">
-                            <div class="popup_wrapper">  
-                                <div class="popup_title"><span>{{current_year}} - {{current_month}} - {{current_date}}</span></div>
-                                <div class="popup_close" @click="closepopup(date)"></div>
-                                <div class="add_list">
-                                    <input type="text"
-                                        v-model="newTask"
-                                        @keyup.enter="addTask"
-                                        placeholder = "Task를 추가해주세요."
-                                    >
-                                    <div class="button add-button" @click="addTask">
-                                        <i class="fas fa-plus"></i>Add
-                                    </div>
-                                </div>
-                                <div class="popup_content">
-                                    <ul class= "todobox">
-                                        <li class="todo row" v-for="(todo, index) in datas[currentkey()]" v-bind:key = "todo">
-                                            <span class="cell">{{todo}}</span>
-                                            <div class="delete-icon cell" @click="removeTask(index)">
-                                                <i class="fas fa-trash"></i>Delete
-                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </li>
                 </ul>
+            </div>
+            <div class="popup" v-if="show_flag === 1">
+                <div class="popup_wrapper">  
+                    <div class="popup_title"><span>{{current_year}} - {{current_month}} - {{current_date}}</span></div>
+                    <div class="popup_close" @click="closepopup()"></div>
+                    <div class="add_list">
+                        <input type="text"
+                            v-model="newTask"
+                            @keyup.enter="addTask"
+                            placeholder = "Task를 추가해주세요."
+                        >
+                        <div class="button add-button" @click="addTask">
+                            <i class="fas fa-plus"></i>Add
+                        </div>
+                    </div>
+                    <div class="popup_content">
+                        <ul class= "todobox">
+                            <li class="todo row" v-for="(key, index) in datas[currentkey()]" v-bind:key="key">
+                                <span class="cell">{{key}}</span>
+                                <div class="delete-icon cell" @click="removeTask(index)">
+                                    <i class="fas fa-trash"></i>Delete
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -174,9 +174,7 @@ export default {
                 if( !(this.currentkey() in this.datas) ) this.datas[this.currentkey()] = [];
             }
         },
-        closepopup(key){
-            alert(key);
-            this.current_date = key;
+        closepopup(){
             this.show_flag = 0;
         },
         changeActivedate(number) {
@@ -200,9 +198,6 @@ export default {
         },
         removeTask(index){
             this.datas[this.currentkey()].splice(index, 1);
-            for(var i in this.datas){
-                alert(i);
-            }
         },
         addTask() {
             if(this.newTask){
