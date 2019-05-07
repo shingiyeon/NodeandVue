@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Vue Compoenent Registration</title>
+    </head>
+    <div class="body">
+        <div id="app">
+            <sender-app>
+                <input v-model="text">
+                <button @click="sender">send</button>
+                <div v-if="receiveText">I sent a message: {{ receiveText }}</div>
+            </sender-app>
+            <receive-app>
+                <div v-if="text">I receive a message : {{ text }}</div>
+            </receive-app>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                components: {
+                    'sender-app' : SenderApp,
+                    'receive-app' : ReceiveApp
+                }
+            })
+
+            var eventBus = new Vue();
+            
+            var SenderApp = {
+                data() {
+                    return {
+                      'text' : '',
+                      'receiveText' : ''
+                    }
+                },
+                created() {
+                    eventBus.$on('message', this.OnReceive);
+                },
+                methods: {
+                    sender() {
+                        EventBus.$emit('message', this.text);
+                        this.text = '';
+                    },
+                    OnReceive(text) {
+                        this.receiveText = text;
+                    }
+                }
+            }
+
+            var ReceiveApp = {
+                data() {
+                    return {
+                        'text' : ''
+                    }
+                },
+                created() {
+                    eventBus.$on('message', this.OnReceive);
+                },
+                methods : {
+                    OnReceive(text) {
+                        this.text = text;
+                    }
+                }
+            }
+        </script>
+    </div>
+</html>

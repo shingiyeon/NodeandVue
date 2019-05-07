@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Vue Compoenent Registration</title>
+    </head>
+    <div class="body">
+        <div id="app">
+            <button>컴포넌트 등록</button>
+            <child-component v-bind:propsdata="message"></child-component>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script>
+            var eventBus = new Vue();
+
+            Vue.component('child-component', {
+                props: ['propsdata'],
+                template: '<button v-on:click="showLog"> {{ propsdata }} </button>',
+                methods: {
+                    showLog: function(){
+                        eventBus.$emit('show-log', 100, 250);
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    message: "Hello Vue!"
+                },
+                created: function(){
+                    eventBus.$on('show-log', function(value1, value2) {
+                        console.log("전달받은 값: ", value1 + value2);
+                    });
+                }
+            });
+        </script>
+    </div>
+</html>
