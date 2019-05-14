@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Vue Router Sample</title>
+    </head>
+    <div class="body">
+        <div id="app">
+            <h1>Nested Vue Router Sample</h1>
+            <p>
+                <router-link to="/user">User 컴포넌트 실행</router-link>
+            </p>
+            <router-view></router-view>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+        <script>
+            var User = {
+                template:`
+                    <div>
+                        User Component
+                        <router-link to="/user/main">Main 컴포넌트 실행</router-link>
+                        <router-link to="/user/login">Login 컴포넌트 실행</router-link>
+                        <router-view></router-view>
+                    </div>
+                `
+            }
+            var Main = { template: '<div>Main</div>'}
+            var Login = { template : '<div>login</div>'}
+
+            var routes = [{
+                path: '/user',
+                component: User,
+                children: [
+                        {path : 'main', component: Main},
+                        {path : 'login', component: Login}
+                    ]
+                }
+            ];
+
+            var router = new VueRouter({
+                routes
+            });
+
+            var app = new Vue({
+                router
+            }).$mount('#app');
+        </script>
+    </div>
+</html>
