@@ -16,7 +16,9 @@
                 <li class="cell">THR</li>
                 <li class="cell">FRI</li>
                 <li class="cell">SAT</li>
-                <li class="cell days" v-for="date in dates" v-bind:key="date">{{ date }}</li>
+                <li class="cell days" v-for="date in dates" v-bind:key="date">
+                    <span class="day">{{ date }}</span>
+                </li>
             </ul>
         </body>
     </div>
@@ -33,7 +35,6 @@ export default {
             var date_list = [];
             var standard_date = this.currentTime.current_year +"-"+this.currentTime.current_month + "-01";
             var first_day = new Date(standard_date).getDay();
-            alert(first_day);
             for(var i=0; i<first_day; i++){
                 date_list.push(null);
             }
@@ -70,7 +71,6 @@ export default {
                         }
                     }
             }
-            alert(date_list);
             return date_list;
         }
     },
@@ -125,6 +125,16 @@ export default {
         text-align: center;
         width: calc(100%/7);
         height: 30px;
+    }
+    .cell:nth-child(7n+8){
+        clear: both;
+    }
+    .days {
+        overflow-y: hidden;
+        height: 100px;
+    }
+    .days > .day {
+        text-align: right;
     }
     .cell:not(.days){
         background-color: blueviolet;

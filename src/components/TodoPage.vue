@@ -108,3 +108,184 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.TodoPage {
+    background-color: 	#F0FFFF;
+}
+
+.TodoPage > .wrapper{
+    display: block;
+    margin-top: 20px;
+    background-color: white;
+}
+
+.TodoPage .header {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.TodoPage .header > h1{
+    display: block;
+    letter-spacing: -2px;
+    margin: 0px;
+}
+
+.TodoPage .header > h2{
+    display: block;
+    font-size: 1.3rem;
+    color: rgba(0,0,0,0.6);
+    letter-spacing: -1px;
+    margin: 0px;
+}
+
+.TodoPage .body{
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    background-color: aliceblue;
+}
+
+.TodoPage .body > .buttons{
+    display: block;
+    text-align: center;
+}
+
+.TodoPage .body > .buttons > .button{
+    display: inline-block;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.TodoPage .body > .buttons .add-button{
+    border: solid 2px rgba(155, 17, 17, 0.87);
+    background-color: rgba(224, 173, 173, 0.945);
+}
+
+.TodoPage .body > .buttons .delete-button{
+    border: solid 2px rgba(17, 17, 155, 0.87);
+    background-color: rgba(173, 173, 224, 0.945);
+}
+
+.TodoPage .body > .buttons > .button{
+    font-weight: 500;
+}
+
+.TodoPage .body > .body-wrapper {
+    margin-top: 10px;
+}
+
+.TodoPage .body > .buttons .add-button:hover{
+    background-color: rgba(219, 66, 66, 0.945);
+}
+
+.TodoPage .body > .buttons .delete-button:hover{
+    background-color: rgba(66, 66, 219, 0.945);
+}
+
+.TodoPage .body .add-list > .input-box{
+    margin-top: 10px;
+    display: block;
+    position: relative;
+}
+
+.TodoPage .body .add-list > .input-box > input{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 80%;
+    outline: none;
+}
+
+.TodoPage .body .add-list > .input-box > input:focus{
+    border-color: black;
+    outline: none;
+}
+
+
+.TodoPage .body .add-list > .input-box > .add-button{
+    display: inline-block;
+    position: absolute;
+    border: 1px solid blue;
+    border-radius: 3px;
+    background-color: skyblue;
+    cursor: pointer;
+    box-sizing: border-box;
+    right: 0;
+    top: 50%;
+    margin-right: 10px;
+    transform: translateY(-50%);
+}
+
+.TodoPage .body .add-list > .input-box > .add-button:hover{
+    background-color: slateblue;
+}
+
+.TodoPage .body .task-wrapper{
+    margin: 0 10px;
+    margin-top: 10px;
+    border: 1px solid seagreen;
+}
+
+.TodoPage .body .task-wrapper .task-item{
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+    border: 1px solid aquamarine;
+    border-radius: 2px;
+    margin: 2.5px 10px;
+    cursor: pointer;
+}
+
+.TodoPage .body .add-list .task-wrapper .task-item:hover{
+    background-color: aquamarine;
+}
+
+.TodoPage .body .task-wrapper .task-item.completed, 
+.TodoPage .body .task-wrapper .task-item.completed .task-item-describe{
+    text-decoration: line-through;
+
+}
+
+.TodoPage .body .delete-list .task-item-describe{
+    display: inline-block;
+    width: 80%;
+}
+
+.TodoPage .body .task-wrapper .task-item > .delete-icon{
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    box-sizing: border-box;
+    top:50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 20%;
+    font-size: 0.5rem;
+    border: 1px solid red;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.TodoPage .body .delete-list .delete-box{
+    margin-top: 10px;
+    border : 1px red solid;
+    text-align: center;
+    background-color: salmon;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.TodoPage .body .delete-list .delete-box:hover{
+    background-color: darksalmon;
+}
+
+.TodoPage .con{
+    max-width: 500px;
+}
+
+</style>
