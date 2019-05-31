@@ -1,11 +1,11 @@
 <template>
-    <div id="CalenderApp">
-        <CalenderView v-bind:currentTime="currentTime" v-on:changeCurrentTime="changeCurrentTime"></CalenderView>
+    <div id="CalendarApp">
+        <CalendarView v-bind:currentTime="currentTime" v-on:changeCurrentTime="changeCurrentTime"></CalendarView>
     </div>
 </template>
 
 <script>
-import CalenderView from './CalenderView.vue'
+import CalendarView from './CalendarView.vue'
 export default {
     data() {
         return {
@@ -52,7 +52,7 @@ export default {
         }
     },
     components: {
-        "CalenderView" : CalenderView
+        "CalendarView" : CalendarView
     }
 }
 </script>

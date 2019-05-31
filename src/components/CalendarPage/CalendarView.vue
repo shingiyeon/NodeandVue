@@ -1,5 +1,5 @@
 <template>
-    <div id="CalenderView">
+    <div id="CalendarView">
         <header>
             <div class="titles">
                 <span class="button left-button" @click="changeCurrentTime(parseInt(currentTime.current_year), parseInt(currentTime.current_month)-1, parseInt(currentTime.current_date))"><i class="fas fa-caret-left"></i></span>
@@ -9,15 +9,18 @@
         </header>
         <body>
             <ul class="dates row">
-                <li class="cell">SUN</li>
-                <li class="cell">MON</li>
-                <li class="cell">TUE</li>
-                <li class="cell">WED</li>
-                <li class="cell">THR</li>
-                <li class="cell">FRI</li>
-                <li class="cell">SAT</li>
-                <li class="cell days" v-for="date in dates" v-bind:key="date">
+                <li class="cell data_not_show">SUN</li>
+                <li class="cell data_not_show">MON</li>
+                <li class="cell data_not_show">TUE</li>
+                <li class="cell data_not_show">WED</li>
+                <li class="cell data_not_show">THR</li>
+                <li class="cell data_not_show">FRI</li>
+                <li class="cell data_not_show">SAT</li>
+                <li class="cell days" v-bind:class="{data_not_show: date == null}" v-for="date in dates" v-bind:key="date">
                     <span class="day">{{ date }}</span>
+                    <ul class="datas" >
+                        <li>temp2</li>
+                    </ul>
                 </li>
             </ul>
         </body>
@@ -26,9 +29,9 @@
 
 
 <script>
-import CalenderTodoPage from './CalenderTodoPage.vue'
+import CalendarTodoPage from './CalendarTodoPage.vue'
 export default {
-    name: 'CalenderView',
+    name: 'CalendarView',
     props: ['currentTime', 'currentData'],
     computed : {
         dates : function() {
@@ -75,7 +78,7 @@ export default {
         }
     },
     components : {
-        "CalenderTodoPage" : CalenderTodoPage
+        "CalendarTodoPage" : CalendarTodoPage
     },
     methods : {
         changeCurrentTime(year, month, dates){
@@ -94,7 +97,7 @@ export default {
 </script>
 
 <style scoped>
-    #CalenderView {
+    #CalendarView {
         width: 80%;
         height: 60%;
         margin-left: auto;
@@ -125,6 +128,7 @@ export default {
         text-align: center;
         width: calc(100%/7);
         height: 30px;
+        padding: 2px;
     }
     .cell:nth-child(7n+8){
         clear: both;
@@ -132,12 +136,26 @@ export default {
     .days {
         overflow-y: hidden;
         height: 100px;
-    }
-    .days > .day {
         text-align: right;
+    }
+    .datas {
+        text-align: center;
     }
     .cell:not(.days){
         background-color: blueviolet;
         color: white;
     }
+    .cell:not(.data_not_show){
+        border: 1px solid #7f7f7f;
+    }
+    .cell:nth-child(n+7){
+        margin-top: -1px;
+    }
+    .cell:not(:nth-child(7n)){
+        margin-right: -1px;
+    }
+    .data_not_show > .datas {
+        display: none;
+    } 
+
 </style>

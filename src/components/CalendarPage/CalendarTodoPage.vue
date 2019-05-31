@@ -1,10 +1,10 @@
 <template>
-    <div id="CalenderTodoPage">
+    <div id="CalendarTodoPage">
     </div>
 </template>
 
 <script>
 export default {
-    name: 'CalenderTodoPage'
+    name: 'CalendarTodoPage'
 }
 </script>
