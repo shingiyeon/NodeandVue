@@ -1,5 +1,5 @@
 <template>
-    <div id="CalendarView">
+    <div id="CalendarView" style="position: relative;">
         <header>
             <div class="titles">
                 <span class="button left-button" @click="changeCurrentTime(parseInt(currentTime.current_year), parseInt(currentTime.current_month)-1, parseInt(currentTime.current_date))"><i class="fas fa-caret-left"></i></span>
@@ -7,7 +7,7 @@
                 <span class="button right-button" @click="changeCurrentTime(parseInt(currentTime.current_year), parseInt(currentTime.current_month)+1, parseInt(currentTime.current_date))"><i class="fas fa-caret-right"></i></span>
             </div>
         </header>
-        <body>
+        <body >
             <ul class="dates row">
                 <li class="cell data_not_show">SUN</li>
                 <li class="cell data_not_show">MON</li>
@@ -17,12 +17,18 @@
                 <li class="cell data_not_show">FRI</li>
                 <li class="cell data_not_show">SAT</li>
                 <li class="cell days" v-bind:class="{data_not_show: date == null}" v-for="date in dates" v-bind:key="date">
-                    <span class="day">{{ date }}</span>
-                    <ul class="datas" >
-                        <li>temp2</li>
-                    </ul>
+                    <div class="content" @click="popup(currentTime.current_year, currentTime.current_month, date)">
+                        <span class="day">{{ date }}</span>
+                        <ul class="datas" >
+                            <li>temp2</li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
+            <div class="popup-bg"></div>
+            <div class="popup">
+                <CalendarTodoPage v-bind:SelectedTime="SelectedTime"></CalendarTodoPage>
+            </div>
         </body>
     </div>
 </template>
@@ -31,6 +37,15 @@
 <script>
 import CalendarTodoPage from './CalendarTodoPage.vue'
 export default {
+    data() {
+        return {
+            SelectedTime : {
+                year : "2000",
+                month : "01",
+                date : "01"
+            }
+        }
+    },
     name: 'CalendarView',
     props: ['currentTime', 'currentData'],
     computed : {
@@ -81,6 +96,12 @@ export default {
         "CalendarTodoPage" : CalendarTodoPage
     },
     methods : {
+        popup(year, month, date){
+            this.changeSelectedTime(parseInt(year), parseInt(month), parseInt(date));
+            alert(this.SelectedTime.year);
+            $('.popup').addClass('show');
+            $('.popup-bg').addClass('show');
+        },
         changeCurrentTime(year, month, dates){
             if(month >= 13) {
                 month = 1;
@@ -91,6 +112,11 @@ export default {
                 year -= 1;
             }
             this.$emit('changeCurrentTime', year, month, dates);
+        },
+        changeSelectedTime(year, month, dates){
+            this.SelectedTime.year = year;
+            this.SelectedTime.month = month;
+            this.SelectedTime.date = dates;
         }
     }
 }
@@ -126,9 +152,10 @@ export default {
     .cell {
         display: block;
         text-align: center;
-        width: calc(100%/7);
+        width: calc(100%/7 + 0.8px);
         height: 30px;
         padding: 2px;
+        overflow-x: hidden;
     }
     .cell:nth-child(7n+8){
         clear: both;
@@ -147,6 +174,7 @@ export default {
     }
     .cell:not(.data_not_show){
         border: 1px solid #7f7f7f;
+        cursor: pointer;
     }
     .cell:nth-child(n+7){
         margin-top: -1px;
@@ -154,8 +182,42 @@ export default {
     .cell:not(:nth-child(7n)){
         margin-right: -1px;
     }
-    .data_not_show > .datas {
+    .data_not_show > * {
         display: none;
-    } 
+    }
+    .popup {
+        display: block;
+        position:absolute;
+        top:50%;
+        left:50%;
+        width:50%;
+        height:50%;
+        transform:translateX(-50%) translateY(-100%);
+        background-color:white;
+        border:10px solid black;
+        opacity:0;
+        visibility:hidden;
+        transition:opacity .5s, visibility .5s, transform .5s;
+    }
+    .popup.show {
+        visibility: visible;
+        opacity: 1;
+        transform:translateX(-50%) translateY(-50%);
+    }
+    .popup-bg{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color:rgba(0,0,0,0);
+        visibility:hidden;
+        transition: background-color .5s, visibility .5s;
+    }
+    .popup-bg.show{
+        background-color:rgba(0,0,0,.5);
+        visibility:visible;
+    }
+
 
 </style>
