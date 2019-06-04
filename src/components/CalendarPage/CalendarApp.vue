@@ -16,6 +16,7 @@ export default {
             },
             currentDatas : []
         }
+            temp.setItem("title", title);
     },
     created: function() {
         this.currentTime.current_date = this.NumtoStr(new Date().getDate());
