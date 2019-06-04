@@ -27,7 +27,10 @@
             </ul>
             <div class="popup-bg"></div>
             <div class="popup">
-                <CalendarTodoPage v-bind:SelectedTime="SelectedTime"></CalendarTodoPage>
+                <div class="popup-header" @click="hiddenpopup()"><div class="popup-close"></div></div>
+                <div class="popup-body">
+                <CalendarTodoPage v-bind:currentDateDatas="currentDateDatas" v-bind:SelectedTime="currentTime"></CalendarTodoPage>
+                </div>
             </div>
         </body>
     </div>
@@ -39,15 +42,11 @@ import CalendarTodoPage from './CalendarTodoPage.vue'
 export default {
     data() {
         return {
-            SelectedTime : {
-                year : "2000",
-                month : "01",
-                date : "01"
-            }
+            currentDateDatas : []
         }
     },
     name: 'CalendarView',
-    props: ['currentTime', 'currentData'],
+    props: ['currentTime', 'currentDatas'],
     computed : {
         dates : function() {
             var date_list = [];
@@ -97,10 +96,15 @@ export default {
     },
     methods : {
         popup(year, month, date){
-            this.changeSelectedTime(parseInt(year), parseInt(month), parseInt(date));
-            alert(this.SelectedTime.year);
+            this.changeCurrentTime(parseInt(year), parseInt(month), parseInt(date));
             $('.popup').addClass('show');
             $('.popup-bg').addClass('show');
+            this.loadcurrentDateData();
+        },
+        hiddenpopup(){
+            $('.popup').removeClass('show');
+            $('.popup-bg').removeClass('show');
+            this.$EventBus.$emit('close-popup');
         },
         changeCurrentTime(year, month, dates){
             if(month >= 13) {
@@ -113,10 +117,16 @@ export default {
             }
             this.$emit('changeCurrentTime', year, month, dates);
         },
-        changeSelectedTime(year, month, dates){
-            this.SelectedTime.year = year;
-            this.SelectedTime.month = month;
-            this.SelectedTime.date = dates;
+        loadcurrentDateData() {
+            this.currentDateDatas = [];
+            alert(this.currentDatas[0]);
+            if(this.currentDatas.length >= 1){
+                for(var i = 0; i < this.currentDatas.length; i++){
+                    if( this.currentDatas.key(i).split("-")[2] == this.currentTime.current_date){
+                        this.currentDateDatas = this.currentDatas.getItem(this.currentDatas.key(i))
+                    }
+                }
+            }
         }
     }
 }
@@ -149,6 +159,9 @@ export default {
         width: 10%;
         font-size: 1.3rem;
     }
+    .button {
+        cursor: pointer;
+    }
     .cell {
         display: block;
         text-align: center;
@@ -159,6 +172,10 @@ export default {
     }
     .cell:nth-child(7n+8){
         clear: both;
+    }
+    .content {
+        width: 100%;
+        height: 100%;
     }
     .days {
         overflow-y: hidden;
@@ -191,10 +208,10 @@ export default {
         top:50%;
         left:50%;
         width:50%;
-        height:50%;
+        height:80%;
         transform:translateX(-50%) translateY(-100%);
         background-color:white;
-        border:10px solid black;
+        border:3px solid black;
         opacity:0;
         visibility:hidden;
         transition:opacity .5s, visibility .5s, transform .5s;
@@ -218,6 +235,36 @@ export default {
         background-color:rgba(0,0,0,.5);
         visibility:visible;
     }
-
-
+    .popup-header{
+        position: absolute;
+        display: inline-block;
+        cursor: pointer;
+        width: 45px;
+        height: 45px;
+        top: 0;
+        right: 0;
+        z-index: 1;
+    }
+    .popup-close {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .popup-close::before, .popup-close::after{
+        content: "";
+        position: absolute;
+        display: block;
+        width: 8px;
+        height: 100%;
+        top:50%;
+        left:50%;
+        background-color: black;
+        transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    }
+    .popup-close::after{
+        transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    }
+    .popup-header:hover > .popup-close {
+       transform:rotate(5deg);
+    }
 </style>

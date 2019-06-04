@@ -7,9 +7,12 @@ import router from './router'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+
+Vue.prototype.$EventBus = new Vue();
+
 new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
-})
+});
