@@ -34,7 +34,7 @@
             </div>
             <div class="content">
                 <ul>
-                    <li v-for="todoItem in SelectedData" v-bind:key="todoItem">
+                    <li v-for="(todoItem, Index) in currentDateDatas" v-bind:key="Index">
                         {{ todoItem.title }}
                         {{ todoItem.body }}
                     </li>
@@ -62,12 +62,12 @@ export default {
             this.newTodoItemBody = '';
         },
         StoreData(time, title, body){
-            alert("emit");
+            this.currentDateDatas.push({"title": title, "body": body});
             this.$EventBus.$emit('add-data', title, body);
             this.clearAll();
         }
     },
-    props: ['SelectedTime', 'SelectedData'],
+    props: ['SelectedTime', 'currentDateDatas'],
     name: 'CalendarTodoPage'
 }
 </script>

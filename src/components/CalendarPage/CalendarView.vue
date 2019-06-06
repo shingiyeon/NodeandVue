@@ -19,8 +19,12 @@
                 <li class="cell days" v-bind:class="{data_not_show: date == null}" v-for="date in dates" v-bind:key="date">
                     <div class="content" @click="popup(currentTime.current_year, currentTime.current_month, date)">
                         <span class="day">{{ date }}</span>
-                        <ul class="datas" >
-                            <li>temp2</li>
+                        <ul class="datas">
+                            <div v-if="date != null && makeIntDateKey(currentTime.current_year, currentTime.current_month, date) in currentDatas">
+                                <li v-for="(contents, Index) in currentDatas[makeIntDateKey(currentTime.current_year, currentTime.current_month, date)]" v-bind:key="Index">
+                                    {{ contents.title }}
+                                </li>
+                            </div>
                         </ul>
                     </div>
                 </li>
@@ -89,7 +93,8 @@ export default {
                     }
             }
             return date_list;
-        }
+        },
+        
     },
     components : {
         "CalendarTodoPage" : CalendarTodoPage
@@ -119,14 +124,23 @@ export default {
         },
         loadcurrentDateData() {
             this.currentDateDatas = [];
-            alert(this.currentDatas[0]);
-            if(this.currentDatas.length >= 1){
-                for(var i = 0; i < this.currentDatas.length; i++){
-                    if( this.currentDatas.key(i).split("-")[2] == this.currentTime.current_date){
-                        this.currentDateDatas = this.currentDatas.getItem(this.currentDatas.key(i))
-                    }
-                }
+            var key = this.makeStrDateKey(this.currentTime.current_year, this.currentTime.current_month, this.currentTime.current_date);
+            if(key in this.currentDatas){
+                this.currentDateDatas = this.currentDatas[key];
             }
+        },
+        makeIntDateKey(year, month, date){
+            if(date == null) return null;
+            return year + "-" + month + "-" + this.NumtoStr(date);
+        },
+        makeStrDateKey(year, month, date){
+            return year + "-" + month + "-" + date;
+        },
+        NumtoStr(number) {
+            if(number < 10){
+                return "0" + number.toString();
+            }
+            return number.toString();
         }
     }
 }

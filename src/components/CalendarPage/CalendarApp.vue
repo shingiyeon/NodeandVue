@@ -14,7 +14,7 @@ export default {
                 current_month : "01",
                 current_date : "01",
             },
-            currentDatas : []
+            currentDatas : {}
         }
             temp.setItem("title", title);
     },
@@ -28,16 +28,20 @@ export default {
             var datekey = this.currentTime.current_year + "-" + this.currentTime.current_month + "-" + this.currentTime.current_date;
             var findkey = false;
             var temp = {};
-            temp.setItem("title", title);
-            temp.setItem("body", body);
+            temp["title"] = title;
+            temp["body"] = body;
             for( var i = 0; i < localStorage.length; i++) {
                 if(localStorage.key(i) == datekey) {
-                    localStorage.getItem(localStorage.key(i)).push(temp);
+                    var list_temp = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                    list_temp.push(temp);
+                    localStorage.setItem(datekey, JSON.stringify(list_temp));
                     findkey = true;
+                    this.currentDatas[datekey].push(temp);
                 }
             }
             if(findkey == false){
-                localStorage.setItem(datekey, [temp]);
+                localStorage.setItem(datekey, JSON.stringify([temp]));
+                this.currentDatas[datekey] = [temp];
             }
         });
     },
@@ -49,15 +53,13 @@ export default {
             this.loadData();
         },
         loadData() {
-            this.currentDatas = [];
+            this.currentDatas = {};
             if(localStorage.length > 0) {
                 for (var i = 0; i < localStorage.length; i++) {
                     if(localStorage.key(i)=="loglevel:webpack-dev-server") continue;
                     if(localStorage.key(i).split("-")[0] == this.currentTime.current_year &&
                     localStorage.key(i).split("-")[1] == this.currentTime.current_month) {
-                        var temp = {};
-                        temp[localStorage.key(i)] = localStorage.getItem(localStorage.key(i));
-                        this.currentDatas.push(temp);
+                        this.currentDatas[localStorage.key(i)] = JSON.parse(localStorage.getItem(localStorage.key(i)));
                     }
                 }
             }
