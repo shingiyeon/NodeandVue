@@ -33,7 +33,7 @@
             <div class="popup">
                 <div class="popup-header" @click="hiddenpopup()"><div class="popup-close"></div></div>
                 <div class="popup-body">
-                <CalendarTodoPage v-bind:currentDateDatas="currentDateDatas" v-bind:SelectedTime="currentTime"></CalendarTodoPage>
+                <CalendarTodoPage v-on:remove="remove" v-on:StoreData="StoreData" v-bind:currentDateDatas="currentDateDatas" v-bind:SelectedTime="currentTime"></CalendarTodoPage>
                 </div>
             </div>
         </body>
@@ -141,6 +141,20 @@ export default {
                 return "0" + number.toString();
             }
             return number.toString();
+        },
+        StoreData(time, title, body){
+            /*var DateKey = time.current_year + "-" + time.current_month + "-" + time.current_date;
+            this.currentDateDatas.push({"title": title, "body": body});
+            this.currentDatas[DateKey] = this.currentDateDatas;*/
+            this.$EventBus.$emit('add-data', title, body);
+            this.loadcurrentDateData();
+        },
+        remove(time, Index){
+           /* var DateKey = time.current_year + "-" + time.current_month + "-" + time.current_date;
+            this.currentDateDatas.splice(Index, 1);
+            this.currentDatas[DateKey] = this.currentDateDatas;*/
+            this.$EventBus.$emit('remove-data', time, Index);
+            this.loadcurrentDateData();
         }
     }
 }
@@ -183,6 +197,7 @@ export default {
         height: 30px;
         padding: 2px;
         overflow-x: hidden;
+        user-select: none;
     }
     .cell:nth-child(7n+8){
         clear: both;
@@ -213,6 +228,14 @@ export default {
     .cell:not(:nth-child(7n)){
         margin-right: -1px;
     }
+
+    .cell:nth-child(7n):not(.data_not_show) .day{
+        color: blue;
+    }
+    .cell:nth-child(7n+1):not(.data_not_show) .day{
+        color: red;
+    }
+
     .data_not_show > * {
         display: none;
     }
@@ -228,6 +251,7 @@ export default {
         border:3px solid black;
         opacity:0;
         visibility:hidden;
+        overflow-x: hidden;
         transition:opacity .5s, visibility .5s, transform .5s;
     }
     .popup.show {
@@ -280,5 +304,9 @@ export default {
     }
     .popup-header:hover > .popup-close {
        transform:rotate(5deg);
+    }
+    .popup-body{
+        position: relative;
+        display: block;
     }
 </style>

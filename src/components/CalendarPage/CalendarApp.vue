@@ -44,6 +44,14 @@ export default {
                 this.currentDatas[datekey] = [temp];
             }
         });
+
+        this.$EventBus.$on('remove-data', (SelectedTime, Index) => {
+            var DateKey = SelectedTime.current_year+"-"+SelectedTime.current_month+"-"+SelectedTime.current_date;
+            var value = JSON.parse(localStorage.getItem(DateKey));
+            value.splice(Index, 1);
+            localStorage.setItem(DateKey, JSON.stringify( value ) );
+            this.currentDatas[DateKey] = value;
+        });
     },
     methods: {
         changeCurrentTime(changed_year, changed_month, changed_date){
@@ -78,7 +86,8 @@ export default {
 </script>
 
 <style scoped>
-#CalenderApp{
-    min-width: 850px;
+#CalendarApp{
+    min-width: 1000px;
+    overflow-x : auto;
 }
 </style>
